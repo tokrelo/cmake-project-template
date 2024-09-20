@@ -5,7 +5,9 @@ project(MyProject)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Enable all warnings and treat warnings as errors
+# Enable all warnings and treat warnings as errors.
+# Warning on signed/unsigned comparison is disabled to allow comparison of
+# size_t and int, which is common in C++ code.
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(-Wall -Wextra -Wpedantic -Werror -Wno-sign-compare)
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -28,7 +30,7 @@ target_link_libraries(app myproject)
 # Find GoogleTest package and create a test executable
 find_package(GTest REQUIRED)
 enable_testing()
-add_executable(tests tests/test.cpp) # ADD MORE TEST FILES HERE
+add_executable(tests tests/test.cpp) # ADD ALL YOUR TEST FILES HERE
 target_link_libraries(tests GTest::GTest GTest::Main myproject)
 add_test(NAME Tests COMMAND tests)
 
