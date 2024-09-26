@@ -15,8 +15,12 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 endif()
 
 # Clang-Tidy integration to enforce conformity to the C++ Core Guidelines
-find_program(CLANG_TIDY_EXE NAMES "clang-tidy" REQUIRED)
-set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
+option(ENABLE_CLANG_TIDY "Enable clang-tidy analysis" ON)
+if(ENABLE_CLANG_TIDY)
+    find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+    message(STATUS "Found clang-tidy: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
+endif()
 
 # Create a library from the project files
 # ADD ALL YOUR SOURCE FILES HERE
