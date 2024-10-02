@@ -40,4 +40,12 @@ add_executable(tests tests/test.cpp) # ADD ALL YOUR TEST FILES HERE
 target_link_libraries(tests GTest::GTest GTest::Main myproject)
 add_test(NAME Tests COMMAND tests)
 
+# Custom target to create a zip file (including the directories include, src,
+# tests and the CMakeLists.txt file)
+add_custom_target(zip
+    COMMAND ${CMAKE_COMMAND} -E tar "cfv" "${CMAKE_BINARY_DIR}/project.zip" --format=zip
+        -- "src/" "include/" "tests/" "CMakeLists.txt"
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Creating a zip file of the project"
+)
 
