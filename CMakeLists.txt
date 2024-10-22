@@ -16,10 +16,11 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 # Enable all warnings and treat warnings as errors.
 # Warning on signed/unsigned comparison is disabled to allow comparison of
 # size_t and int, which is common in C++ code.
+option(ENABLE_SANITIZERS "Enable asan and ubsan" OFF)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(-Wall -Wextra -Wpedantic -Werror -Wno-sign-compare)
     # Enable sanitizers in Debug builds
-    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    if(ENABLE_SANITIZERS)
         add_compile_options(-fsanitize=address -fsanitize=undefined)
         add_link_options(-fsanitize=address -fsanitize=undefined)
     endif()
